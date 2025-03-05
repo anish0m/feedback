@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
@@ -41,3 +42,5 @@ class AddFavouriteView(View):
     def post(self, request):
         review_id = request.POST['review.id']
         fav_review = Review.objects.get(pk=review_id)
+        request.session["favourite_review"] = fav_review
+        return HttpResponseRedirect("/reviews/" + review_id)
